@@ -28,44 +28,49 @@ class App {
   addGUI () {
     const gui = this.gui = new dat.GUI();
     const treeFolder = gui.addFolder('tree');
+    const branchFolder = gui.addFolder('branching');
+    const trunkFolder = gui.addFolder('trunk');
 
     const ctrls = [
+      // Tree
       treeFolder.add(this.config, 'seed').min(1).max(1000),
-      treeFolder.add(this.config, 'segments').min(6).max(20),
+      // treeFolder.add(this.config, 'segments').min(6).max(20), no effect
       treeFolder.add(this.config, 'levels').min(0).max(7),
-      treeFolder.add(this.config, 'vMultiplier').min(0.01).max(10),
+      // treeFolder.add(this.config, 'vMultiplier').min(0.01).max(10), no textures
       treeFolder.add(this.config, 'twigScale').min(0).max(1),
+
+      // Branching
+      branchFolder.add(this.config, 'initalBranchLength').min(0.1).max(1),
+      branchFolder.add(this.config, 'lengthFalloffFactor').min(0.5).max(1),
+      branchFolder.add(this.config, 'lengthFalloffPower').min(0.1).max(1.5),
+      branchFolder.add(this.config, 'clumpMax').min(0).max(1),
+      branchFolder.add(this.config, 'clumpMin').min(0).max(1),
+      branchFolder.add(this.config, 'branchFactor').min(2).max(4),
+      branchFolder.add(this.config, 'dropAmount').min(-1).max(1),
+      branchFolder.add(this.config, 'growAmount').min(-0.5).max(1),
+      branchFolder.add(this.config, 'sweepAmount').min(-1).max(1),
+
+      // Trunk
+      trunkFolder.add(this.config, 'maxRadius').min(0.05).max(1.0),
+      trunkFolder.add(this.config, 'climbRate').min(0.05).max(1.0),
+      trunkFolder.add(this.config, 'trunkKink').min(0.0).max(0.5),
+      trunkFolder.add(this.config, 'treeSteps').min(0).max(35).step(1),
+      trunkFolder.add(this.config, 'taperRate').min(0.7).max(1.0),
+      trunkFolder.add(this.config, 'radiusFalloffRate').min(0.5).max(0.8),
+      trunkFolder.add(this.config, 'twistRate').min(0.0).max(10.0),
+      trunkFolder.add(this.config, 'trunkLength').min(0.1).max(5.0),
     ];
 
     ctrls.forEach((ctrl) => ctrl.onChange(() => this.createTree()));
 
+    // Materials
     const matFolder = gui.addFolder('materials');
-    matFolder.addColor(this.config, 'treeColor').onChange((hex) => {
-      this.treeMaterial.color.setHex(hex);
-    });
-    matFolder.addColor(this.config, 'twigColor').onChange((hex) => {
-      this.twigMaterial.color.setHex(hex);
-    });
+    matFolder.addColor(this.config, 'treeColor')
+      .onChange((hex) => this.treeMaterial.color.setHex(hex));
+    matFolder.addColor(this.config, 'twigColor')
+      .onChange((hex) => this.twigMaterial.color.setHex(hex));
 
     gui.add(this, 'exportGLTF').name('export glTF');
-
-    // initalBranchLength: 0.49,
-    // lengthFalloffFactor: 0.85,
-    // lengthFalloffPower: 0.99,
-    // clumpMax: 0.454,
-    // clumpMin: 0.404,
-    // branchFactor: 2.45,
-    // dropAmount: -0.1,
-    // growAmount: 0.235,
-    // sweepAmount: 0.01,
-    // maxRadius: 0.139,
-    // climbRate: 0.371,
-    // trunkKink: 0.093,
-    // treeSteps: 5,
-    // taperRate: 0.947,
-    // radiusFalloffRate: 0.73,
-    // twistRate: 3.02,
-    // trunkLength: 2.4,
   }
 
   createTree () {
