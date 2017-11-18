@@ -1,7 +1,9 @@
 {
   "name": "glTF-Procedural-Trees",
   "version": "1.0.0",
-  "description": "",
+  "description": "Create procedural glTF 2.0 trees with proctree.js and three.js.",
+  "author": "Don McCurdy <dm@donmccurdy.com>",
+  "license": "MIT",
   "main": "src/index.js",
   "scripts": {
     "dev": "budo src/index.js:bundle.js",
@@ -9,8 +11,10 @@
     "deploy": "npm run build && now --static && npm run clean",
     "clean": "rm bundle.js"
   },
-  "author": "Don McCurdy <dm@donmccurdy.com>",
-  "license": "MIT",
+  "now": {
+    "alias": "gltf-trees.donmccurdy.com",
+    "public": true
+  },
   "devDependencies": {
     "browserify": "^14.5.0",
     "budo": "^10.0.4"
