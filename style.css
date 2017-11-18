@@ -1,3 +1,8 @@
+html {
+  font-family: Raleway, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
 html,
 body,
 #container {
@@ -5,4 +10,65 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
+}
+
+.header-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+}
+
+header {
+  display: inline-block;
+  margin: 0 auto;
+
+
+  background: #000;
+  color: #F5F5F5;
+  box-shadow: 1px -1px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1em;
+  padding: 0 10px;
+}
+
+.header-link {
+  color: #F5F5F5;
+  display: inline-block;
+  background: #000;
+  transition: background ease 0.2s;
+}
+
+.header-link.icon {
+  width: 40px;
+  text-align: center;
+}
+
+.header-link:hover {
+  background: #252525;
+}
+
+.header-link.icon img {
+  width: 24px;
+  vertical-align: middle;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-row:first-child {
+  height: 40px;
+  line-height: 40px;
+}
+
+.header-row:last-child .header-link {
+  font-size: 0.8em;
+  padding: 0.2em 10px;
 }
