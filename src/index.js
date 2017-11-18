@@ -68,14 +68,19 @@ class App {
       trunkFolder.add(this.config, 'trunkLength').min(0.1).max(5.0),
     ];
 
-    ctrls.forEach((ctrl) => ctrl.onChange(() => this.createTree()));
+    ctrls.forEach((ctrl) => {
+      ctrl.onChange(() => this.createTree());
+      ctrl.listen();
+    });
 
     // Materials
     const matFolder = gui.addFolder('materials');
     matFolder.addColor(this.config, 'treeColor')
-      .onChange((hex) => this.treeMaterial.color.setHex(hex));
+      .onChange((hex) => this.treeMaterial.color.setHex(hex))
+      .listen();
     matFolder.addColor(this.config, 'twigColor')
-      .onChange((hex) => this.twigMaterial.color.setHex(hex));
+      .onChange((hex) => this.twigMaterial.color.setHex(hex))
+      .listen();
 
     gui.add(this, 'resetDefaults');
 
@@ -91,13 +96,13 @@ class App {
     treeGeometry.addAttribute('position', createFloatAttribute(tree.verts, 3));
     treeGeometry.addAttribute('normal', createFloatAttribute(tree.normals, 3));
     treeGeometry.addAttribute('uv', createFloatAttribute(tree.UV, 2));
-    treeGeometry.setIndex(createIntArray(tree.faces, 1));
+    treeGeometry.setIndex(createIntAttribute(tree.faces, 1));
 
     const twigGeometry = new THREE.BufferGeometry();
     twigGeometry.addAttribute('position', createFloatAttribute(tree.vertsTwig, 3));
     twigGeometry.addAttribute('normal', createFloatAttribute(tree.normalsTwig, 3));
     twigGeometry.addAttribute('uv', createFloatAttribute(tree.uvsTwig, 2));
-    twigGeometry.setIndex(createIntArray(tree.facesTwig, 1));
+    twigGeometry.setIndex(createIntAttribute(tree.facesTwig, 1));
 
     const treeGroup = new THREE.Group();
     treeGroup.add(new THREE.Mesh(treeGeometry, this.treeMaterial));
@@ -126,6 +131,8 @@ class App {
 
   resetDefaults () {
     Object.assign(this.config, DEFAULT_CONFIG);
+    this.treeMaterial.color.setHex(this.config.treeColor);
+    this.twigMaterial.color.setHex(this.config.twigColor);
     this.createTree();
   }
 }
@@ -135,7 +142,7 @@ function createFloatAttribute (array, itemSize) {
   return new THREE.BufferAttribute(typedArray, itemSize);
 }
 
-function createIntArray (array, itemSize) {
+function createIntAttribute (array, itemSize) {
   const typedArray = new Uint16Array(Tree.flattenArray(array));
   return new THREE.BufferAttribute(typedArray, itemSize);
 }
