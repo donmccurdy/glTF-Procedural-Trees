@@ -77,6 +77,8 @@ class App {
     matFolder.addColor(this.config, 'twigColor')
       .onChange((hex) => this.twigMaterial.color.setHex(hex));
 
+    gui.add(this, 'resetDefaults');
+
     this.exportCtrl = gui.add(this, 'exportGLTF').name('export glTF');
     const exportLabel = this.exportCtrl.domElement.parentElement.querySelector('.property-name');
     exportLabel.style.width = 'auto';
@@ -120,6 +122,11 @@ class App {
       setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 
     }, {binary: true});
+  }
+
+  resetDefaults () {
+    Object.assign(this.config, DEFAULT_CONFIG);
+    this.createTree();
   }
 }
 
