@@ -8,13 +8,19 @@ const Viewer = require('./viewer');
 class App {
   constructor (el) {
     this.config = Object.assign({}, DEFAULT_CONFIG);
+
     this.viewer = new Viewer(el);
+
+    this.exportCtrl = null;
+
     this.textureLoader = new THREE.TextureLoader();
+
     this.treeMaterial = new THREE.MeshStandardMaterial({
       color: this.config.treeColor,
       roughness: 1.0,
       metalness: 0.0
     });
+
     this.twigMaterial = new THREE.MeshStandardMaterial({
       color: this.config.twigColor,
       roughness: 1.0,
@@ -22,6 +28,7 @@ class App {
       map: this.textureLoader.load('assets/twig-1.png'),
       alphaTest: 0.9
     });
+
     this.addGUI();
   }
 
@@ -70,7 +77,9 @@ class App {
     matFolder.addColor(this.config, 'twigColor')
       .onChange((hex) => this.twigMaterial.color.setHex(hex));
 
-    gui.add(this, 'exportGLTF').name('export glTF');
+    this.exportCtrl = gui.add(this, 'exportGLTF').name('export glTF');
+    const exportLabel = this.exportCtrl.domElement.parentElement.querySelector('.property-name');
+    exportLabel.style.width = 'auto';
   }
 
   createTree () {
@@ -93,6 +102,9 @@ class App {
     treeGroup.add(new THREE.Mesh(twigGeometry, this.twigMaterial));
 
     this.viewer.setTree(treeGroup);
+
+    const numVerts = tree.verts.length + tree.vertsTwig.length;
+    this.exportCtrl.name(`export glTF (${numVerts} vertices)`);
   }
 
   exportGLTF () {
