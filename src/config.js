@@ -24,6 +24,6 @@ module.exports = {
   trunkLength: 2.4,
 
   // custom
-  treeColor: 0x36221A,
+  treeColor: 0x9d7362,
   twigColor: 0xF16950
 };
