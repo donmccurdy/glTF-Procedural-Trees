@@ -27,16 +27,25 @@ class App {
 
   addGUI () {
     const gui = this.gui = new dat.GUI();
+    const treeFolder = gui.addFolder('tree');
 
     const ctrls = [
-      gui.add(this.config, 'seed').min(1).max(1000),
-      gui.add(this.config, 'segments').min(6).max(20),
-      gui.add(this.config, 'levels').min(0).max(7),
-      gui.add(this.config, 'vMultiplier').min(0.01).max(10),
-      gui.add(this.config, 'twigScale').min(0).max(1),
+      treeFolder.add(this.config, 'seed').min(1).max(1000),
+      treeFolder.add(this.config, 'segments').min(6).max(20),
+      treeFolder.add(this.config, 'levels').min(0).max(7),
+      treeFolder.add(this.config, 'vMultiplier').min(0.01).max(10),
+      treeFolder.add(this.config, 'twigScale').min(0).max(1),
     ];
 
     ctrls.forEach((ctrl) => ctrl.onChange(() => this.createTree()));
+
+    const matFolder = gui.addFolder('materials');
+    matFolder.addColor(this.config, 'treeColor').onChange((hex) => {
+      this.treeMaterial.color.setHex(hex);
+    });
+    matFolder.addColor(this.config, 'twigColor').onChange((hex) => {
+      this.twigMaterial.color.setHex(hex);
+    });
 
     gui.add(this, 'exportGLTF').name('export glTF');
 
