@@ -4,7 +4,10 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "budo src/index.js:bundle.js"
+    "dev": "budo src/index.js:bundle.js",
+    "build": "browserify src/index.js -o bundle.js",
+    "deploy": "npm run build && now --static && npm run clean",
+    "clean": "rm bundle.js"
   },
   "author": "Don McCurdy <dm@donmccurdy.com>",
   "license": "MIT",
