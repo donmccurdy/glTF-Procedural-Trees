@@ -28,6 +28,8 @@ class Viewer {
     this.controls.autoRotate = true;
     this.controls.autoRotateSpeed = -5;
     this.controls.enablePan = false;
+    this.controls.minDistance = 1;
+    this.controls.maxDistance = 90;
 
     this.background = createVignetteBackground({
       aspect: this.camera.aspect,

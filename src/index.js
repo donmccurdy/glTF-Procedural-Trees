@@ -4,6 +4,7 @@ const Tree = require('../lib/proctree');
 const dat = require('../lib/dat.gui.min');
 const DEFAULT_CONFIG = require('./config');
 const Viewer = require('./viewer');
+const download = require('downloadjs');
 
 class App {
   constructor (el) {
@@ -119,12 +120,7 @@ class App {
     exporter.parse(this.viewer.getTree(), (buffer) => {
 
       const blob = new Blob([buffer], {type: 'application/octet-stream'});
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'tree.glb';
-      link.click();
-
-      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+      download(blob, 'tree.glb', {type: 'application/octet-stream'});
 
     }, {binary: true});
   }

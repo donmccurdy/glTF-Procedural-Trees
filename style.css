@@ -1,4 +1,6 @@
-html {
+html,
+body {
+  overflow: hidden;
   font-family: Raleway, Helvetica, sans-serif;
   font-weight: 300;
 }
