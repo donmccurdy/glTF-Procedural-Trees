@@ -1,7 +1,7 @@
 const THREE = window.THREE = require('three');
+const dat = require('dat.gui');
 const GLTFExporter = require('../lib/GLTFExporter');
 const Tree = require('../lib/proctree');
-const dat = require('../lib/dat.gui.min');
 const DEFAULT_CONFIG = require('./config');
 const Viewer = require('./viewer');
 const download = require('downloadjs');
