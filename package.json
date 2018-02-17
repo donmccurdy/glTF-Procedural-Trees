@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "budo src/index.js:bundle.js",
     "build": "browserify src/index.js -o bundle.js",
-    "deploy": "npm run build && now --static && npm run clean",
+    "deploy": "npm run build && now --static && now alias && npm run clean",
     "clean": "rm bundle.js"
   },
   "now": {
