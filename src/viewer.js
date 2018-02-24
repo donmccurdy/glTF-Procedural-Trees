@@ -1,6 +1,7 @@
 const THREE = require('three');
-const OrbitControls = require('../lib/OrbitControls');
 const createVignetteBackground = require('three-vignette-background');
+
+require('three/examples/js/controls/OrbitControls');
 
 const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
@@ -24,7 +25,7 @@ class Viewer {
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( el.clientWidth, el.clientHeight );
 
-    this.controls = new OrbitControls( this.camera, this.renderer.domElement );
+    this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
     this.controls.autoRotate = true;
     this.controls.autoRotateSpeed = -5;
     this.controls.enablePan = false;

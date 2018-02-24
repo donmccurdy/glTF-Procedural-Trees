@@ -95,13 +95,13 @@ class App {
 
     const treeGeometry = new THREE.BufferGeometry();
     treeGeometry.addAttribute('position', createFloatAttribute(tree.verts, 3));
-    treeGeometry.addAttribute('normal', createFloatAttribute(tree.normals, 3));
+    treeGeometry.addAttribute('normal', normalizeAttribute(createFloatAttribute(tree.normals, 3)));
     treeGeometry.addAttribute('uv', createFloatAttribute(tree.UV, 2));
     treeGeometry.setIndex(createIntAttribute(tree.faces, 1));
 
     const twigGeometry = new THREE.BufferGeometry();
     twigGeometry.addAttribute('position', createFloatAttribute(tree.vertsTwig, 3));
-    twigGeometry.addAttribute('normal', createFloatAttribute(tree.normalsTwig, 3));
+    twigGeometry.addAttribute('normal', normalizeAttribute(createFloatAttribute(tree.normalsTwig, 3)));
     twigGeometry.addAttribute('uv', createFloatAttribute(tree.uvsTwig, 2));
     twigGeometry.setIndex(createIntAttribute(tree.facesTwig, 1));
 
@@ -141,6 +141,16 @@ function createFloatAttribute (array, itemSize) {
 function createIntAttribute (array, itemSize) {
   const typedArray = new Uint16Array(Tree.flattenArray(array));
   return new THREE.BufferAttribute(typedArray, itemSize);
+}
+
+function normalizeAttribute (attribute) {
+  var v = new THREE.Vector3();
+  for (var i = 0; i < attribute.count; i++) {
+    v.set(attribute.getX(i), attribute.getY(i), attribute.getZ(i));
+    v.normalize();
+    attribute.setXYZ(i, v.x, v.y, v.z);
+  }
+  return attribute;
 }
 
 const app = new App(document.querySelector('#container'));
